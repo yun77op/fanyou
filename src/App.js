@@ -63,6 +63,7 @@ const App = () => {
     }, {
         initialRouteName: 'FrontScreen',
         mode: Platform.OS === 'ios' ? 'modal' : 'card',
+        headerMode: 'screen'
     });
 
     return (

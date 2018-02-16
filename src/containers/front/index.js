@@ -8,6 +8,9 @@ import MainScreen from '../main_screen';
 
 export default class FrontScreen extends Timeline {
 
+  static navigationOptions = {
+    header: null
+  }
     constructor(options) {
       super(options); 
     

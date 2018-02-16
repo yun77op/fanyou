@@ -10,7 +10,6 @@ import photoTimelineStore from './modules/photos_user_timeline';
 import FriendRequestsStore from './modules/friend_requests';
 import draftsStore from './modules/drafts';
 import preferencesStore from './modules/preferences';
-import ProfileStoreManager from './modules/profileManager';
 
 export default {
     homeTimelineStore,
@@ -25,6 +24,5 @@ export default {
     photoTimelineStore,
     friendRequestsStore: new FriendRequestsStore(),
     draftsStore,
-    preferencesStore,
-    profileStoreManager: new ProfileStoreManager()
+    preferencesStore
 }

@@ -8,10 +8,10 @@ import ProfileUserTimeline from './modules/user_timeline';
 import ProfileFooterList from './modules/footer_list';
 import ProfilePhotosUserLastest from './modules/photos_user_lastest';
 import UserCard from './modules/user_card';
+import PactivityIndicator from '../../modules/activity_indicator';
 
-
+@inject('userStore')
 @observer
-@inject('profileStoreManager')
 export default class ProfileScreen extends PofileBase {
 
     onFriendsPress = () => {
@@ -43,23 +43,45 @@ export default class ProfileScreen extends PofileBase {
 
     onFollowButtonClick = () => {
         const {user} = this.props.navigation.state.params;
-        
-        const profileStore = this.props.profileStoreManager.getById(user.id);
-        const options = {
-            id: user.id
-        }
+        const {userStore} = this.props;
+        const userId = user.id;
+        const record = userStore.users.get(userId);
+        const data = {
+            id: userId
+        };
 
-        if (user.following) {
-            profileStore.removeFriend(options);
+        if (record.following) {
+            userStore.removeFriend(data);
         } else {
-            profileStore.addFriend(options);
+            userStore.removeFriend(data);
         }
     }
 
+    componentWillMount() {
+        const {user} = this.props.navigation.state.params;
+        const {userStore} = this.props;
+        const userId = user.id;
+
+        if ('statuses_count' in user) {
+            if (!userStore.hasRecord(userId)) {
+                userStore.users.set(userId, user);
+            }
+        } else if (!userStore.hasRecord(userId)) {
+            userStore.fetch(userId);
+        }
+    }
 
     render() {
-        const {user} = this.props.navigation.state.params;
+        const userParamsObj = this.props.navigation.state.params.user;
+        const userId = userParamsObj.id;
         const {navigation} = this.props;
+        const {userStore} = this.props;
+        
+        if (!userStore.hasRecord(userId)) {
+            return <PactivityIndicator />;
+        }
+
+        const user = userStore.users.get(userId);
 
         return (
             <ScrollView style={containerStyles.container}>

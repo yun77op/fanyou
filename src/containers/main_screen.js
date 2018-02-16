@@ -18,13 +18,13 @@ const MainScreen = TabNavigator({
         screen: CurrentProfileScreen
     }
 }, {
-    tabBarPosition: 'top',
+    tabBarPosition: 'bottom',
     animationEnabled: true,
     lazy: true,
     tabBarOptions: {
       activeTintColor: '#e91e63',
-        showLabel: false
-    },
+        showLabel: true
+    }
 });
 
 export default MainScreen;

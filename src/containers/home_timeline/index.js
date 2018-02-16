@@ -18,7 +18,7 @@ export default class HomeTimelineScreen extends Timeline {
             style={tabStyles.tabBarIcon}
             source={require('../../res/icon/home.png')}
           />
-        ),
+        )
     };
 
     componentDidMount() {

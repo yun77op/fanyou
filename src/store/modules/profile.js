@@ -3,10 +3,11 @@ import BaseStore from './base';
 import {callAPI} from '../fanfou'; 
 import {Alert, AsyncStorage} from 'react-native';
 
-class ProfileStoreManager extends BaseStore {
+class ProfileStore extends BaseStore {
 
+    @observable users = observable.map();
 
-    @observable user;
+    
 
     @action async addFriend(options) {
         const resp = await callAPI('addFriend', options);
@@ -22,4 +23,4 @@ class ProfileStoreManager extends BaseStore {
     }
 }
 
-export default ProfileStoreManager;
+export default ProfileStore;

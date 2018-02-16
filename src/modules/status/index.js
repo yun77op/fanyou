@@ -43,9 +43,11 @@ export default class Status extends Component {
         });
     }
 
-    onProfilePress = () => {
+    onProfilePress = (userId) => {
         const {item, onPressItem} = this.props;
-        const user = item.user;
+        const user = item.user.id !== userId ? {
+            id: userId
+        } : item.user;
 
         onPressItem({
             type: 'profile',
@@ -99,7 +101,7 @@ export default class Status extends Component {
 
         return (
             <TouchableOpacity style={styles.container} onPress={this.onPress}>
-                <TouchableOpacity onPress={this.onProfilePress}>
+                <TouchableOpacity onPress={this.onProfilePress.bind(null, user.id)}>
                     <Image style={styles.profileImage} source={{uri: toHttps(user.profile_image_url)}} />
                 </TouchableOpacity>
                 <View style={styles.body}>

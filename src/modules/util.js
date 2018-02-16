@@ -11,7 +11,7 @@ export const toPhotoHttps = (uri) => {
 }
 
 export const extractUserFromText = (text, style, onPress) => {
-    const pattern = /@<a href="http:\/\/fanfou\.com\/(.+) class="former">(.+)<\/a>/g;
+    const pattern = /@<a href="http:\/\/fanfou\.com\/(.+)" class="former">(.+)<\/a>/g;
 
     const users = {};
 
@@ -24,15 +24,16 @@ export const extractUserFromText = (text, style, onPress) => {
 
     return (
         <View style={style}>
-        {
-
-            parts.map((text, index, array) => {
-                if (users[text]) {
-                    return <Text onPress={onPress} key={index}>@{text}</Text>;
-                }
-                return <Text key={index}>{text}</Text>
-            })
-        }
+            <Text>
+            {
+                parts.map((text, index, array) => {
+                    if (users[text]) {
+                        return <Text onPress={onPress.bind(null, users[text])} key={index}>@{text}</Text>;
+                    }
+                    return <Text key={index}>{text}</Text>
+                })
+            }
+            </Text>
         </View>
     )
 }

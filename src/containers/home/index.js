@@ -6,10 +6,13 @@ import {authorize, getAccessToken, isCallbackPage} from '../../store/fanfou';
 const styles = StyleSheet.create({
     welcome: {
         color: '#333',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontSize: 18,
+        marginBottom: 20
     },
 
     container: {
+        marginTop: 40
     }
 });
 
@@ -54,6 +57,9 @@ export default class HomeScreen extends Component {
                 getAccessToken(data)
                     .then(() => {
                         this.navigateToHomeTimeline();
+                    })
+                    .catch((error) => {
+                        Alert.alert('登陆失败');
                     });
             }
         }

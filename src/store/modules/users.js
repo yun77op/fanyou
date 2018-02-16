@@ -1,31 +1,58 @@
-import {observable, action, runInAction} from 'mobx';
+import {observable, computed, action, runInAction} from 'mobx';
 import BaseStore from './base';
 import {callAPI} from '../fanfou'; 
 import {Alert, AsyncStorage} from 'react-native';
 
 class UserStore extends BaseStore {
 
-    @observable user;
+    @observable users = observable.map();
 
-    @action async fetch() {
-        try {
-            const resp = await callAPI('showUser');
-            runInAction(() => {
-                this.user = resp;
-            });
-        } catch(e) {
-        }
+    @observable loggedUserId = '';
+
+    @computed get loggedUser() {
+        return this.users.get(this.loggedUserId);
+    }
+
+    @action async addFriend(options) {
+        const resp = await callAPI('addFriend', options);
+
+        return resp;
+    }
+
+    getById(id) {
+        return this.users.get(id);
+    }
+
+    hasRecord(id) {
+        return !!this.users.get(id);
+    }
+
+    @action async removeFriend(options) {
+        const resp = await callAPI('removeFriend', options);
+
+        return resp;
+    }
+
+    @action async fetch(id) {
+        const data = id ? {id} : {};
+        const resp = await callAPI('showUser', data);
+
+        runInAction(() => {
+            this.users.set(resp.id, resp);
+        });
+
+        return resp;
     }
 
 
     @action async update(options) {
-        try {
-            const resp = await callAPI('updateProfile', options);
-            runInAction(() => {
-                this.user = resp;
-            });
-        } catch(e) {
-        }
+        const resp = await callAPI('updateProfile', options);
+
+        const updatedUser = {...this.loggedUser, ...resp};
+
+        this.users.set(this.loggedUserId, updatedUser);
+
+        return resp;
     }
 }
 
