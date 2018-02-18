@@ -115,7 +115,7 @@ export default class Status extends Component {
                             item.photo && (<TouchableOpacity onPress={this.onImagePress} style={styles.thumbContainer}><Image style={styles.thumb} source={{uri: image}} /></TouchableOpacity>)
                         }
                         {
-                            item.photo && (<Modal visible={imageModalVisible} transparent={true}>
+                            item.photo && (<Modal onRequestClose={this.onImageViewerClick} visible={imageModalVisible} transparent={true}>
                                                 <ImageViewer onClick={this.onImageViewerClick} imageUrls={images}/>
                                             </Modal>)
                         }
@@ -123,7 +123,7 @@ export default class Status extends Component {
                     <View style={styles.footer}>
                         <TouchableOpacity onPress={this.onCommentPress}>
                         <Image
-                        style={styles.actionIcon}
+                      style={styles.actionIcon}
                         source={require('../../res/icon/message.png')}
                       />
                       </TouchableOpacity>

@@ -20,7 +20,8 @@ export default class ProfileFooterList extends Component {
         const { navigate } = this.props.navigation;
         
         navigate('Favourites', {
-            user
+            user,
+            navigation: this.props.navigation
         });
     }
 

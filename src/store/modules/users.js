@@ -10,6 +10,9 @@ class UserStore extends BaseStore {
     @observable loggedUserId = '';
 
     @computed get loggedUser() {
+        if (this.loggedUserId === '') {
+            return null;
+        }
         return this.users.get(this.loggedUserId);
     }
 
@@ -38,6 +41,9 @@ class UserStore extends BaseStore {
         const resp = await callAPI('showUser', data);
 
         runInAction(() => {
+            if (id === undefined) {
+                this.loggedUserId = resp.id;
+            }
             this.users.set(resp.id, resp);
         });
 

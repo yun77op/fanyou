@@ -73,6 +73,10 @@ const loadLocalUser = async () => {
     return null;
 }
 
+const removeLocalUser = async () => {
+    return AsyncStorage.removeItem('@Fanyou:accessToken');
+}
+
 const callAPI = (name, options) => {
     return new Promise((resolve, reject) => {
         if (!api) {
@@ -91,4 +95,5 @@ const callAPI = (name, options) => {
     });
 }
 
-export {authorize, getAccessToken, callAPI, loadLocalUser, setupAccount, isCallbackPage};
+export {authorize, removeLocalUser, getAccessToken, callAPI,
+    loadLocalUser, setupAccount, isCallbackPage};

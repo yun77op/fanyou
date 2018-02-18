@@ -37,11 +37,7 @@ export default class HomeScreen extends Component {
     }
 
     navigateToHomeTimeline() {
-        const { navigate } = this.props.navigation;
-
-        navigate('HomeTimeline', {
-            
-        });
+        this.props.onLogged();
     }
 
     onLoadEnd = (data) => {
@@ -60,6 +56,10 @@ export default class HomeScreen extends Component {
                     })
                     .catch((error) => {
                         Alert.alert('登陆失败');
+
+                        this.setState({
+                            authorizeUrl: ''
+                        });
                     });
             }
         }

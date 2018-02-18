@@ -43,7 +43,7 @@ export default class PhotoCard extends Component {
                 <TouchableOpacity onPress={this.onImagePress}>
                     <Image style={styles.image} source={{uri: toPhotoHttps(item.photo.thumburl)}} />
                 </TouchableOpacity>
-                <Modal visible={this.state.imageModalVisible} transparent={true}>
+                <Modal onRequestClose={this.onImageViewerClick} visible={this.state.imageModalVisible} transparent={true}>
                     <ImageViewer onClick={this.onImageViewerClick} imageUrls={imageUrls}/>
                 </Modal>
             </View>

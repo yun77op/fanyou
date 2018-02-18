@@ -10,6 +10,7 @@ import ProfileActionList from './modules/action_list'
 import PactivityIndicator from '../../modules/activity_indicator';
 import utilStyles from '../../modules/util_styles';
 import UserCard from './modules/user_card';
+import ProfileLogout from './modules/logout';
 
 
 import {NavigationActions} from 'react-navigation';
@@ -42,7 +43,7 @@ export default class CurrentProfileScreen extends PofileBase {
 
     onProfileUpdate = () => {
         const {navigate} = this.props.screenProps.rootNavigation;
-        const user = this.props.userStore.user;
+        const user = this.props.userStore.loggedUser;
 
         navigate('ProfileUpdate', {
             user
@@ -51,7 +52,7 @@ export default class CurrentProfileScreen extends PofileBase {
 
     onSettingsPress = () => {
         const {navigate} = this.props.screenProps.rootNavigation;
-        const user = this.props.userStore.user;
+        const user = this.props.userStore.loggedUser;
 
         navigate('Settings', {
             user
@@ -60,7 +61,7 @@ export default class CurrentProfileScreen extends PofileBase {
 
     onFriendsPress = () => {
         const {navigate} = this.props.screenProps.rootNavigation;
-        const user = this.props.userStore.user;
+        const user = this.props.userStore.loggedUser;
 
         navigate('Friends', {
             user
@@ -69,7 +70,7 @@ export default class CurrentProfileScreen extends PofileBase {
 
     onFollowersPress = () => {
         const {navigate} = this.props.screenProps.rootNavigation;
-        const user = this.props.userStore.user;
+        const user = this.props.userStore.loggedUser;
 
         navigate('Followers', {
             user
@@ -78,7 +79,7 @@ export default class CurrentProfileScreen extends PofileBase {
 
     onTimelinePress = () => {
         const {navigate} = this.props.screenProps.rootNavigation;
-        const user = this.props.userStore.user;
+        const user = this.props.userStore.loggedUser;
 
         navigate('UserTimeline', {
             user
@@ -87,7 +88,7 @@ export default class CurrentProfileScreen extends PofileBase {
 
     render() {
 
-        const user = this.props.userStore.user;
+        const user = this.props.userStore.loggedUser;
         const navigation = this.props.screenProps.rootNavigation;
 
         if (!user) {
@@ -130,6 +131,10 @@ export default class CurrentProfileScreen extends PofileBase {
 
             <View style={utilStyles.mt3}>
                 <ProfileFooterList user={user} navigation={navigation} />
+            </View>
+
+            <View style={utilStyles.mt3}>
+                <ProfileLogout navigation={navigation} />
             </View>
         </ScrollView>
         )

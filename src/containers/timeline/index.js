@@ -12,8 +12,11 @@ export default class Timeline extends Component {
     }
 
     renderItem = ({item}) => {
+        const navigation = this.props.screenProps ? this.props.screenProps.rootNavigation :
+                    this.props.navigation.state.params.navigation
+
         return ExtendedStatus({
-            navigation: this.props.screenProps.rootNavigation,
+            navigation,
             item
         })
     }
