@@ -11,13 +11,11 @@ import PactivityIndicator from '../../modules/activity_indicator';
 import utilStyles from '../../modules/util_styles';
 import UserCard from './modules/user_card';
 import ProfileLogout from './modules/logout';
-
-
-import {NavigationActions} from 'react-navigation';
+import {withNavigation} from 'react-navigation';
 
 @inject('userStore', 'currentUserTimelineStore')
 @observer
-export default class CurrentProfileScreen extends PofileBase {
+class CurrentProfileScreen extends PofileBase {
 
     static navigationOptions = {
         // Note: By default the icon is only shown on iOS. Search the showIcon option below.
@@ -42,7 +40,7 @@ export default class CurrentProfileScreen extends PofileBase {
     }
 
     onProfileUpdate = () => {
-        const {navigate} = this.props.screenProps.rootNavigation;
+        const {navigate} = this.props.navigation;
         const user = this.props.userStore.loggedUser;
 
         navigate('ProfileUpdate', {
@@ -51,7 +49,7 @@ export default class CurrentProfileScreen extends PofileBase {
     }
 
     onSettingsPress = () => {
-        const {navigate} = this.props.screenProps.rootNavigation;
+        const {navigate} = this.props.navigation;
         const user = this.props.userStore.loggedUser;
 
         navigate('Settings', {
@@ -60,7 +58,7 @@ export default class CurrentProfileScreen extends PofileBase {
     }
 
     onFriendsPress = () => {
-        const {navigate} = this.props.screenProps.rootNavigation;
+        const {navigate} = this.props.navigation;
         const user = this.props.userStore.loggedUser;
 
         navigate('Friends', {
@@ -69,7 +67,7 @@ export default class CurrentProfileScreen extends PofileBase {
     }
 
     onFollowersPress = () => {
-        const {navigate} = this.props.screenProps.rootNavigation;
+        const {navigate} = this.props.navigation;
         const user = this.props.userStore.loggedUser;
 
         navigate('Followers', {
@@ -78,7 +76,7 @@ export default class CurrentProfileScreen extends PofileBase {
     }
 
     onTimelinePress = () => {
-        const {navigate} = this.props.screenProps.rootNavigation;
+        const {navigate} = this.props.navigation;
         const user = this.props.userStore.loggedUser;
 
         navigate('UserTimeline', {
@@ -89,7 +87,7 @@ export default class CurrentProfileScreen extends PofileBase {
     render() {
 
         const user = this.props.userStore.loggedUser;
-        const navigation = this.props.screenProps.rootNavigation;
+        const navigation = this.props.navigation;
 
         if (!user) {
             return <PactivityIndicator />;
@@ -141,6 +139,7 @@ export default class CurrentProfileScreen extends PofileBase {
     }
 }
 
+export default withNavigation(CurrentProfileScreen);
 
 const styles = StyleSheet.create({
     container: {

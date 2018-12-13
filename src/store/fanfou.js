@@ -54,23 +54,13 @@ const setupAccount = (accessToken) => {
 }
 
 const loadLocalUser = async () => {
+    const accessToken = await AsyncStorage.getItem('@Fanyou:accessToken');
 
-    try {
-        const accessToken = await AsyncStorage.getItem('@Fanyou:accessToken');
-
-        if (accessToken === null) {
-            return accessToken;
-        }
-
-        return JSON.parse(accessToken);
-    } catch(e) {
-        // Error saving data
-
-        console.error('Error to get accessToken');
-        throw new Error('Error to get accessToken');
+    if (accessToken === null) {
+        return accessToken;
     }
 
-    return null;
+    return JSON.parse(accessToken);
 }
 
 const removeLocalUser = async () => {

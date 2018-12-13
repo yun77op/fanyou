@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
     },
 
     container: {
-        marginTop: 40
+        flex: 1,
+        justifyContent: 'center'
     }
 });
 
@@ -37,7 +38,7 @@ export default class HomeScreen extends Component {
     }
 
     navigateToHomeTimeline() {
-        this.props.onLogged();
+        this.props.navigation.navigate('App');
     }
 
     onLoadEnd = (data) => {

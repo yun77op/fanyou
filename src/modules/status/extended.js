@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Status from './index';
+import {withNavigation} from 'react-navigation';
 
-const ExtendedStatus = ({navigation, item, user}) => {
-
-    const onPressItem = (options) => {
-        const { navigate } = navigation;
+class ExtendedStatus extends Component {
+    onPressItem = (options) => {
+        const { navigate } = this.props.navigation;
         const {user, item} = options;
 
         switch (options.type) {
@@ -37,7 +37,12 @@ const ExtendedStatus = ({navigation, item, user}) => {
         }
     }
 
-    return <Status item={item} user={user} onPressItem={onPressItem} />
+    render() {
+        const {user, item} = this.props;
+        return <Status item={item} user={user} onPressItem={this.onPressItem} />
+    }
 }
 
-export default ExtendedStatus;
+
+
+export default withNavigation(ExtendedStatus);
