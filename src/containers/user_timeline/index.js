@@ -20,10 +20,7 @@ export default class UserTimelineScreen extends Timeline {
     }
 
     renderItem = ({item}) => {
-        return ExtendedStatus({
-            navigation: this.props.navigation,
-            item
-        })
+        return <ExtendedStatus item={item} />;
     }
 
     listStoreName = 'userTimelineStore';

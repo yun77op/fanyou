@@ -9,12 +9,8 @@ import { inject, observer } from 'mobx-react';
 @observer
 export default class ProfileUserTimeline extends Component {
 
-
     renderItem = ({item}) => {
-        return ExtendedStatus({
-            navigation: this.props.navigation,
-            item
-        })
+        return <ExtendedStatus item={item} />;
     }
 
     _keyExtractor = (item, index) => item.id;

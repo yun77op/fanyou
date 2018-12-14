@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, ActivityIndicator, TextInput, TouchableOpacity, Image, Text, StyleSheet, View, Button} from 'react-native';
+import { Alert, SafeAreaView, ActivityIndicator, TextInput, TouchableOpacity, Image, Text, StyleSheet, View, Button} from 'react-native';
 import {toHttps} from '../../modules/util';
 import {format} from '../../modules/time_format';
 import { inject, observer } from 'mobx-react';
@@ -281,7 +281,7 @@ export default class ComposeScreen extends Component {
         const {params} = this.props.navigation.state;
 
         return (
-            <View>
+            <SafeAreaView>
                 <View style={[styles.container, containerStyles.container]}>
 
                     <TextInput ref={(textInput) => {this.textInput = textInput;}} style={styles.textIput} onChangeText={(text) => this.setState({text})}
@@ -324,7 +324,7 @@ export default class ComposeScreen extends Component {
                         <Image source={{uri: imageUri}} style={styles.image} />
                     </View>)
                 }
-            </View>
+            </SafeAreaView>
         )
     }
 }

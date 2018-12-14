@@ -27,7 +27,7 @@ import ComposeScreen from './containers/compose/screen';
 import CurrentProfileScreen from './containers/profile/current_profile';
 
 const HomeBottomTab = createBottomTabNavigator({
-    HomeTimeline: {
+    Home: {
         screen: HomeTimelineScreen
     },
     Mentions: {
@@ -40,7 +40,7 @@ const HomeBottomTab = createBottomTabNavigator({
         screen: CurrentProfileScreen
     }
 }, {
-    initialRouteName: 'HomeTimeline',
+    initialRouteName: 'Home',
     tabBarPosition: 'bottom',
     animationEnabled: true,
     lazy: true,
@@ -58,9 +58,6 @@ const HomeStack = createStackNavigator({
     Profile: {
         screen: ProfileScreen
     },
-    // ComposeModal: {
-    //     screen: ComposeModal
-    // },
     Friends: {
         screen: FriendsScreen
     },
@@ -91,11 +88,25 @@ const HomeStack = createStackNavigator({
     headerMode: 'screen'
 });
 
+const HomeAndComposeStack = createStackNavigator({
+        HomeStack: {
+            screen: HomeStack,
+            navigationOptions: {
+                header: null
+            }
+        },
+        ComposeModal: {
+            screen: ComposeModal
+        },
+    }, {
+        mode: 'modal',
+        // headerMode: 'none',
+    });
 
 const AppContainer = createAppContainer(createSwitchNavigator(
     {
       AuthLoading: AuthLoadingScreen,
-      App: HomeStack,
+      App: HomeAndComposeStack,
       Auth: AuthScreen,
     },
     {

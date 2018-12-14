@@ -5,10 +5,18 @@ import {Alert, AsyncStorage} from 'react-native';
 
 class StatusStore extends BaseStore {
 
-    @observable status = undefined;
+    @observable statuses = new Map();
 
-    @action setStatus = (status) => {
-        this.status = status;
+    @action async showStatus(id) {
+        const resp = await callAPI('showStatus', {
+            id
+        });
+
+        if (!resp.error) {
+            this.statuses.set(resp.id, resp)
+        }
+
+        return resp;
     }
 
     @action async addFavorite() {

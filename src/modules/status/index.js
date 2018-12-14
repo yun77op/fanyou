@@ -2,21 +2,12 @@ import React, { Component } from 'react';
 import { Alert, NetInfo, Modal, TouchableOpacity, Image, Text, StyleSheet, View, Button} from 'react-native';
 import {toHttps, toPhotoHttps, extractUserFromText} from '../util';
 import {format} from '../time_format';
-import {getEffectiveType} from '../net_info';
-import ImageViewer from 'react-native-image-zoom-viewer';
 import { inject, observer } from 'mobx-react';
+import StatusMedia from './Media';
 
 @inject('preferencesStore')
 @observer
 export default class Status extends Component {
-
-    constructor(options) {
-        super(options);
-
-        this.state = {
-            imageModalVisible: false
-        }
-    }
 
     componentWillMount() {
         if (!this.props.preferencesStore.sync) {
@@ -64,39 +55,8 @@ export default class Status extends Component {
         });
     }
 
-    onImagePress = () => {
-        this.setState(() => ({
-            imageModalVisible: true
-        }))
-    }
-
-    onImageViewerClick = () => {
-        this.setState(() => ({
-            imageModalVisible: false
-        }))
-    }
-
     render() {
         const {item} = this.props;
-        const {imageModalVisible} = this.state;
-        let images, image;
-
-        if (item.photo) {
-            image = toPhotoHttps(item.photo.thumburl);
-            const effectiveType = getEffectiveType();
-            let largeurl;
-
-            if (this.props.preferencesStore.smartPic) {
-                largeurl = effectiveType === '4g' ? item.photo.largeurl : item.photo.imageurl;
-            } else {
-                largeurl = item.photo.largeurl;
-            }
-            
-            images = [{
-                url: toPhotoHttps(largeurl)
-            }]
-        }
-        
         const user = item.user;
 
         return (
@@ -111,29 +71,23 @@ export default class Status extends Component {
                     </View>
                     <View style={styles.contentContainer}>
                         {extractUserFromText(item.text, styles.content, this.onProfilePress)}
-                        {
-                            item.photo && (<TouchableOpacity onPress={this.onImagePress} style={styles.thumbContainer}><Image style={styles.thumb} source={{uri: image}} /></TouchableOpacity>)
-                        }
-                        {
-                            item.photo && (<Modal onRequestClose={this.onImageViewerClick} visible={imageModalVisible} transparent={true}>
-                                                <ImageViewer onClick={this.onImageViewerClick} imageUrls={images}/>
-                                            </Modal>)
-                        }
+
+                        {item.photo && <StatusMedia photo={item.photo} />}
                     </View>
                     <View style={styles.footer}>
                         <TouchableOpacity onPress={this.onCommentPress}>
-                        <Image
+                            <Image
                       style={styles.actionIcon}
                         source={require('../../res/icon/message.png')}
                       />
-                      </TouchableOpacity>
+                        </TouchableOpacity>
 
-                      <TouchableOpacity onPress={this.onRepostPress}>
-                      <Image
-                      style={styles.actionIcon}
-                      source={require('../../res/icon/repost.png')}
-                    />
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={this.onRepostPress}>
+                        <Image
+                        style={styles.actionIcon}
+                        source={require('../../res/icon/repost.png')}
+                        />
+                        </TouchableOpacity>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -153,18 +107,6 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         backgroundColor: '#fff',
         borderRadius: 5
-    },
-    thumbContainer: {
-        maxWidth: 80,
-        height: 80,
-        marginLeft: 5,
-        flexGrow: 1
-    },
-    thumb: {
-        flex: 1,
-        width: undefined,
-        height: undefined,
-        resizeMode: 'cover'
     },
     footer: {
         flexDirection: 'row',

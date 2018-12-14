@@ -31,7 +31,7 @@ class ExtendedStatus extends Component {
             
             case 'status':
                 navigate('Status', {
-                    item
+                    id: item.id
                 });
                 break;
         }

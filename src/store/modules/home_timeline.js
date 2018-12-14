@@ -10,10 +10,9 @@ class HomeTimelineStore extends TimelineStore {
 
     async load(options = {}) {
         const resp = await callAPI('getHomeTimeline', options);
-        
+
         return resp;
     }
-
 }
 
 export default new HomeTimelineStore();

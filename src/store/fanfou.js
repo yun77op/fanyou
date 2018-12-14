@@ -79,8 +79,7 @@ const callAPI = (name, options) => {
                 resolve(resp);
             })
             .error((error) => {
-                reject({error});
-                console.error(error); 
+                resolve({error: error.response});
             });
     });
 }

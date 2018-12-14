@@ -11,26 +11,22 @@ export const toPhotoHttps = (uri) => {
 }
 
 export const extractUserFromText = (text, style, onPress) => {
-    const pattern = /@<a href="http:\/\/fanfou\.com\/(.+)" class="former">(.+)<\/a>/g;
-
-    const users = {};
-
-    text = text.replace(pattern, (match, user, nickname) => {
-        users[nickname] = user;
-        return '@' + nickname + '@';
-    });
-
-    const parts = text.split('@');
+    const parts = text.split(/(#[^#]+#|@<a[^<]+<\/a>)/);
 
     return (
         <View style={style}>
             <Text>
             {
-                parts.map((text, index, array) => {
-                    if (users[text]) {
-                        return <Text onPress={onPress.bind(null, users[text])} key={index}>@{text}</Text>;
+                parts.map((text, index) => {
+                    if (text[0] === '#') {
+                        const result = text.match(/\/q\/([^"]+)">([^<]+)/);
+                        return <Text key={index}>#{result[2]}#</Text>
+                    } else if (text[0] === '@') {
+                        const result = text.match(/fanfou.com\/([^"]+)" class="former">([^<]+)/);
+                        return <Text onPress={onPress.bind(null, result[1])} key={index}>@{result[2]}</Text>
+                    } else {
+                        return <Text key={index}>{text}</Text>
                     }
-                    return <Text key={index}>{text}</Text>
                 })
             }
             </Text>

@@ -10,10 +10,7 @@ export default class PofileBase extends Component {
 
 
     renderItem = ({item}) => {
-        return ExtendedStatus({
-            navigation: this.props.navigation,
-            item
-        })
+        return <ExtendedStatus item={item} />;
     }
 
     render() {
